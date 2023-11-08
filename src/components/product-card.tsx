@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import Skeleton from "./skeleton";
+
 interface ProductCardProps {
   title: string;
   price: number;
@@ -9,7 +11,7 @@ interface ProductCardProps {
   isMainProduct?: boolean;
 }
 
-export default function ProductCard({
+function Component({
   title,
   price,
   image,
@@ -46,3 +48,14 @@ export default function ProductCard({
     </Link>
   );
 }
+
+function Loading({ isMainProduct = false }: { isMainProduct?: boolean }) {
+  return (
+    <Skeleton
+      className="group row-span-3 col-span-3 data-[main-product=true]:col-span-6 data-[main-product=true]:row-span-6  rounded-lg bg-zinc-900 overflow-hidden flex justify-center items-end relative h-[25rem] data-[main-product=true]:h-[51.5rem]"
+      data-main-product={isMainProduct}
+    />
+  );
+}
+
+export default { Component, Loading };
