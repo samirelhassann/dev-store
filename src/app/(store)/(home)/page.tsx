@@ -1,13 +1,15 @@
+import { Metadata } from "next";
+
 import ProductCard from "@/components/product-card";
 import { api } from "@/data/api";
 import { Product } from "@/data/types/product";
 
+export const metadata: Metadata = {
+  title: "Home",
+};
+
 async function getFeaturedProducts(): Promise<Product[]> {
   const productsResponse = await api("/products/featured", {
-    // next: {
-    //   revalidate: 60 * 60 * 1, // 1 hour
-    // },
-
     cache: "no-store",
   });
 

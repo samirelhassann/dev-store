@@ -1,0 +1,56 @@
+/* eslint-disable @next/next/no-img-element */
+import { ImageResponse } from "next/og";
+
+import { api } from "@/data/api";
+import { Product } from "@/data/types/product";
+import { env } from "@/env";
+
+import colors from "tailwindcss/colors";
+
+export const runtime = "edge";
+
+export const alt = "About Acme";
+export const size = {
+  width: 1200,
+  height: 630,
+};
+
+export const contentType = "image/png";
+
+async function getProductDetails(slug: string): Promise<Product> {
+  const productsResponse = await api(`/products/${slug}`, {
+    next: {
+      revalidate: 60 * 60 * 1, // 1 hour
+    },
+  });
+
+  const productInfo = await productsResponse.json();
+
+  return productInfo;
+}
+
+export default async function OgImage({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const product = await getProductDetails(params.slug);
+
+  const formatedUrl = new URL(product.image, env.APP_URL).toString();
+
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          background: colors.zinc[950],
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <img src={formatedUrl} alt="" style={{ width: "100%" }} />
+      </div>
+    )
+  );
+}

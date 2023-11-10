@@ -23,9 +23,11 @@ function Component({
     currency: "BRL",
   }).format(price);
 
+  const formatedLink = `/product/${slug}`;
+
   return (
     <Link
-      href={slug}
+      href={formatedLink}
       className="group row-span-3 col-span-3 data-[main-product=true]:col-span-6 data-[main-product=true]:row-span-6  rounded-lg bg-zinc-900 overflow-hidden flex justify-center items-end relative"
       data-main-product={isMainProduct}
     >
