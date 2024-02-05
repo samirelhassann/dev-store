@@ -23,7 +23,7 @@ export default async function Home() {
 
   return (
     <div className="grid max-h-[860px] grid-cols-9 grid-rows-6 gap-6 ">
-      {products.map((product: Product) => {
+      {products?.map((product: Product) => {
         return (
           <ProductCard.Component
             key={product.id}
